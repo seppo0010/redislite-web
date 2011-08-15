@@ -146,7 +146,7 @@ Event.observe(window, 'load', function() {
 </head>
 <body>
 <div id="available_commands">
-	<h2>Available<br />Commands</h2>
+	<h2>Quick<br />Reference</h2>
 </div>
 <h1>Redislite Demo</h1>
 <p>Redislite is a software library that implements a self-contained, serverless, zero-configuration, redis-compatible database engine. Like SQLite is to a SQL server.<br />Feel free to try it out!</p>
