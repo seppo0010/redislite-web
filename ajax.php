@@ -1,4 +1,5 @@
 <?php
+if (get_magic_quotes_gpc()) $_POST['command'] = stripslashes($_POST['command']);
 session_start();
 $id = session_id();
 @mkdir('databases/' . substr($id, 0, 2));
