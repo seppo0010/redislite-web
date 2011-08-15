@@ -26,6 +26,9 @@
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
 <script type="text/javascript">
+var commands = [];
+var cursor = -1;
+var has_temp_data = false;
 Event.observe(window, 'load', function() {
 	Event.observe($('command'), 'keypress', function(event) {
 		if(event.keyCode == Event.KEY_RETURN) {
@@ -40,16 +43,52 @@ Event.observe(window, 'load', function() {
 				"method": "post",
 				"parameters": { "command" : $F('command') },
 				"onSuccess": function(t) {
-					command.insert(new Element('div', {"class": "result"}).update(t.responseText.escapeHTML()));
+					command.insert(new Element('div', {"class": "result"}).update(t.responseText.escapeHTML().replace(/\n/g, "<br />")));
 				},
 				"onFailure": function(t) {
 					command.insert(new Element('div', {"class": "result"}).update("(error) Response error"));
 				},
 				"onComplete": function() {
 					command.show();
+					cursor = -1;
+					$('command').focus();
+					try {
+						$('box').scrollTop = $('box').scrollHeight;
+					} catch (e) {}
 				},
 			});
+			if (has_temp_data) {
+				has_temp_data = false;
+				commands.pop();
+			}
+			commands.push($F('command'));
 			$('command').setValue('');
+		} else if (event.keyCode == Event.KEY_UP) {
+			event.stop();
+			if (cursor == -1) {
+				cursor = commands.length + 0;
+				if ($F('command').length > 0) {
+					has_temp_data = true;
+					commands.push($F('command'));
+				}
+			}
+			cursor--;
+			if (cursor < 0) return;
+			$('command').setValue(commands[cursor].escapeHTML());
+		} else if (event.keyCode == Event.KEY_DOWN) {
+			event.stop();
+			if (cursor == -1) return;
+			if (cursor >= commands.length - 1) {
+				 if (has_temp_data) {
+					 has_temp_data = false;
+					 commands.pop();
+				 }
+				$('command').setValue('');
+				cursor = -1;
+				return;
+			 }
+			cursor++;
+			$('command').setValue(commands[cursor].escapeHTML());
 		}
 	});
 	$('command').focus();
