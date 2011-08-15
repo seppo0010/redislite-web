@@ -18,6 +18,7 @@ p {
 	height: 300px;
 	overflow: auto;
 	*/
+	float: left;
 }
 
 #box .prompt {
@@ -33,17 +34,13 @@ p {
 	padding: 0;
 	border: 0;
 	font: bold 12px/20px Menlo,"monospace";
+	width: 500px;
 }
 
 #available_commands {
-	position: absolute;
-	top: 0;
-	right: 0;
+	float: right;
 	border: 1px solid #000;
 	padding: 4px;
-}
-
-#available_commands {
 	font: 18px/24px Helvetica, Arial, sans-serif;
 }
 
@@ -72,6 +69,8 @@ var available_commands = ["get","set","setnx","append","strlen","del","exists","
 var commands = [];
 var cursor = -1;
 var has_temp_data = false;
+
+Event.observe(document, 'click', function() { $('command').focus(); });
 Event.observe(window, 'load', function() {
 	(function () {
 		var list = new Element('ul');
@@ -145,6 +144,10 @@ Event.observe(window, 'load', function() {
 });
 </script>
 </head>
+<body>
+<div id="available_commands">
+	<h2>Available<br />Commands</h2>
+</div>
 <h1>Redislite Demo</h1>
 <p>Redislite is a software library that implements a self-contained, serverless, zero-configuration, redis-compatible database engine. Like SQLite is to a SQL server.<br />Feel free to try it out!</p>
 <p>You can also <a href="http://github.com/seppo0010/redislite">grab the source code</a> and <a href="databases/<?php echo substr($session_id, 0, 2); ?>/<?php echo substr($session_id,2); ?>.rld">download your database</a></p>
@@ -177,7 +180,5 @@ Event.observe(window, 'load', function() {
 		<input type="text" spellcheck="false" autocomplete="off" id="command" />
 	</div>
 </div>
-<div id="available_commands">
-	<h2>Available<br />Commands</h2>
-</div>
+</body>
 </html>
