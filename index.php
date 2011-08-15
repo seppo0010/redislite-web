@@ -34,13 +34,52 @@ p {
 	border: 0;
 	font: bold 12px/20px Menlo,"monospace";
 }
+
+#available_commands {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: 1px solid #000;
+	padding: 4px;
+}
+
+#available_commands {
+	font: 18px/24px Helvetica, Arial, sans-serif;
+}
+
+#available_commands ul,
+#available_commands ul li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: bold 12px/20px Menlo,"monospace";
+	text-transform:uppercase;
+}
+
+#available_commands ul li {
+	padding: 0 4px;
+}
+#available_commands ul li a {
+	color: #222;
+	text-decoration: none;
+}
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
 <script type="text/javascript">
+var available_commands = ["get","set","setnx","append","strlen","del","exists","getbit","getrange","substr","incr","decr","mget","rpush","lpush","rpushx","lpushx","rpop","lpop","llen","lindex","lrange","incrby","decrby","rename","renamenx","keys","dbsize","ping","type","info"];
+
 var commands = [];
 var cursor = -1;
 var has_temp_data = false;
 Event.observe(window, 'load', function() {
+	(function () {
+		var list = new Element('ul');
+		$A(available_commands).each(function (c) {
+			list.insert(new Element('li').insert(new Element('a', {"href":"http://redis.io/commands/" + c, "target": "_blank"}).update(c)));
+		});
+		$('available_commands').insert(list);
+	})()
 	Event.observe($('command'), 'keypress', function(event) {
 		if(event.keyCode == Event.KEY_RETURN) {
 			var command = new Element('div', {"class":"command"}).insert(
@@ -110,9 +149,35 @@ Event.observe(window, 'load', function() {
 <p>Redislite is a software library that implements a self-contained, serverless, zero-configuration, redis-compatible database engine. Like SQLite is to a SQL server.<br />Feel free to try it out!</p>
 <p>You can also <a href="http://github.com/seppo0010/redislite">grab the source code</a> and <a href="databases/<?php echo substr($session_id, 0, 2); ?>/<?php echo substr($session_id,2); ?>.rld">download your database</a></p>
 <div id="box">
+	<div class="command">
+	<span class="prompt">redislite&gt;</span>
+	<span class="query">SET key value</span>
+	</div>
+	<div class="result">
+	OK
+	</div>
+
+	<div class="command">
+	<span class="prompt">redislite&gt;</span>
+	<span class="query">GET key</span>
+	</div>
+	<div class="result">
+	"value"
+	</div>
+
+	<div class="command">
+	<span class="prompt">redislite&gt;</span>
+	<span class="query">DEL key</span>
+	</div>
+	<div class="result">
+	(integer) 1
+	</div>
 	<div class="command" id="prompt">
 		<span class="prompt">redislite&gt;</span>
 		<input type="text" spellcheck="false" autocomplete="off" id="command" />
 	</div>
+</div>
+<div id="available_commands">
+	<h2>Available<br />Commands</h2>
 </div>
 </html>
