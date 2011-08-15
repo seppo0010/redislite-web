@@ -1,12 +1,23 @@
-<?php session_start(); ?>
+<?php
+session_start();
+$session_id = session_id();
+?>
 <html>
 <head>
 <title>Redislite Demo</title>
 <style>
+h1 {
+	font: 26px/30px Helvetica, Arial, sans-serif;
+}
+p {
+	font: 12px/14px Helvetica, Arial, sans-serif;
+}
 #box { 
 	font: 12px/20px Menlo,"monospace";
+	/*
 	height: 300px;
 	overflow: auto;
+	*/
 }
 
 #box .prompt {
@@ -53,7 +64,7 @@ Event.observe(window, 'load', function() {
 					cursor = -1;
 					$('command').focus();
 					try {
-						$('box').scrollTop = $('box').scrollHeight;
+						$(document).scrollTop = $(document).scrollHeight;
 					} catch (e) {}
 				},
 			});
@@ -96,14 +107,9 @@ Event.observe(window, 'load', function() {
 </script>
 </head>
 <h1>Redislite Demo</h1>
+<p>Redislite is a software library that implements a self-contained, serverless, zero-configuration, redis-compatible database engine. Like SQLite is to a SQL server.<br />Feel free to try it out!</p>
+<p>You can also <a href="http://github.com/seppo0010/redislite">grab the source code</a> and <a href="databases/<?php echo substr($session_id, 0, 2); ?>/<?php echo substr($session_id,2); ?>">download your database</a></p>
 <div id="box">
-	<div class="command">
-	<span class="prompt">redislite&gt;</span>
-	<span class="query">GET a</span>
-	</div>
-	<div class="result">
-	"asd"
-	</div>
 	<div class="command" id="prompt">
 		<span class="prompt">redislite&gt;</span>
 		<input type="text" spellcheck="false" autocomplete="off" id="command" />
