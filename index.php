@@ -150,7 +150,8 @@ Event.observe(window, 'load', function() {
 </div>
 <h1>Redislite Demo</h1>
 <p>Redislite is a software library that implements a self-contained, serverless, zero-configuration, redis-compatible database engine. Like SQLite is to a SQL server.<br />Feel free to try it out!</p>
-<p>You can also <a href="http://github.com/seppo0010/redislite">grab the source code</a> and <a href="databases/<?php echo substr($session_id, 0, 2); ?>/<?php echo substr($session_id,2); ?>.rld">download your database</a></p>
+<p>You can also <a href="http://github.com/seppo0010/redislite">grab the source code</a> and <a href="databases/<?php echo substr($session_id, 0, 2); ?>/<?php echo substr($session_id,2); ?>.rld">download your database</a>.</p>
+<p>If you are having problems with your database, <a href="delete_db.php" onclick="if(!confirm('Are you sure you want to delete your database?')) return false;">Delete database</a></p>
 <div id="box">
 	<div class="command">
 	<span class="prompt">redislite&gt;</span>
